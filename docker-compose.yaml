@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  app:
+    build:
+      context: app
+      args:
+        SYNAPSE_SERVER_NAME: ${SYNAPSE_SERVER_NAME}
+        SYNAPSE_REPORT_STATS: ${SYNAPSE_REPORT_STATS}
+    restart: always
+    env_file:
+      - host.env
+      - synapse.env
+    volumes:
+      - data:/data
+    networks:
+      - certs
+
+volumes:
+  data:
+
+networks:
+  certs:
+    name: certs
+    external: true

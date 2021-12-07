@@ -1,0 +1,5 @@
+# This file was automatically generated.
+
+VIRTUAL_HOST		= 
+VIRTUAL_PORT		= 8008
+LETSENCRYPT_HOST	= 
