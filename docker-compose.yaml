@@ -1,24 +1,33 @@
 version: "3.2"
 services:
   app:
-    build:
-      context: app
-      args:
-        SYNAPSE_SERVER_NAME: ${SYNAPSE_SERVER_NAME}
-        SYNAPSE_REPORT_STATS: ${SYNAPSE_REPORT_STATS}
+    image: matrixdotorg/synapse
     restart: always
+    volumes:
+      - synapse-data:/data
+    networks:
+      - backend
+
+  proxy:
+    image: nginx:1.21.4-alpine
+    restart: always
+    depends_on:
+      - app
+    volumes:
+      - ./synapse-proxy.conf:/etc/nginx/conf.d/default.conf
     env_file:
       - host.env
-      - synapse.env
-    volumes:
-      - data:/data
     networks:
       - certs
+      - backend
 
 volumes:
-  data:
+  synapse-data:
+    name: synapse-data
+    external: true
 
 networks:
   certs:
     name: certs
     external: true
+  backend:
