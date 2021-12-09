@@ -1,8 +1,23 @@
 version: "3.2"
 services:
+  database:
+    build: database
+    restart: always
+    volumes:
+      - database:/var/lib/postgresql/data
+    secrets:
+      - psql_password
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/psql_password
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
+    networks:
+      - backend
+
   app:
     image: matrixdotorg/synapse
     restart: always
+    depends_on:
+      - database
     volumes:
       - synapse-data:/data
     networks:
@@ -25,9 +40,14 @@ volumes:
   synapse-data:
     name: synapse-data
     external: true
+  database:
 
 networks:
   certs:
     name: certs
     external: true
   backend:
+
+secrets:
+  psql_password:
+    file: ./psql_password.txt
