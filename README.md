@@ -50,7 +50,7 @@ Edit the `homeserver.yaml` file, and replace the following lines...
 database:
   name: sqlite3
   args:
-    database: /data/homeserver.yaml
+    database: /data/homeserver.db
 ```
 
 with...
