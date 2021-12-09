@@ -48,9 +48,9 @@ Edit the `homeserver.yaml` file, and replace the following lines...
 
 ```yaml
 database:
-	name: sqlite3
-	args:
-		database: /data/homeserver.yaml
+  name: sqlite3
+  args:
+    database: /data/homeserver.yaml
 ```
 
 with...
